@@ -1,0 +1,84 @@
+{% extends "first_app/layout/main_base.html" %}
+{% block title_block %}
+  {{customer.name}}
+{% endblock title_block %}
+{% block content_block %}
+<div class="container-fluid px-0">
+  <div class="jumbotron mb-0">
+    <div class="row mx-0">
+      {% for message in messages %}
+        <div class="col-12 mx-auto py-2">
+          <div class="alert alert-{{message.tags}}">
+            {{ message }}
+          </div>
+        </div>
+      {% endfor %}
+      <div class="col-4">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="mb-0">Customer Details</h3>
+          </div>
+          <div class="card-body">
+            <table class="table">
+              <tr>
+                <td>Name:</td>
+                <td>{{customer.name}}</td>
+              </tr>
+              <tr>
+                <td>Email:</td>
+                <td>{{customer.email}}</td>
+              </tr>
+              <tr>
+                <td>Phone:</td>
+                <td><a href="tel:{{customer.phone}}">{{customer.phone}}</a></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-8">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="mb-0">Customer Order details</h3>
+          </div>
+          <div class="card-body">
+            {% include "first_app/components/stats.html" %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 py-3">
+    <table class="table table-bordered">
+      <thead class="bg-dark text-white">
+        <tr class="text-center">
+          <th>Product Name</th>
+          <th>Category</th>
+          <th>Order Status</th>
+          <th>Order Updated</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in orders %}
+          <tr class="text-center">
+            <td>{{order.product.name}}</td>
+            <td>{{order.product.category}}</td>
+            <td>{{order.order_status}}</td>
+            <td>{{order.date_added}}</td>
+
+            <td class="text-center">
+              <button
+                data-product="{{order.product.name}}"
+                data-order ="{{order.id}}"
+                data-toggle="modal" data-target="#delete_order"
+                class="btn btn-sm btn-danger del_order_btn">Remove</button>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% include "first_app/components/delete_order.html" %}
+{% endblock content_block %}

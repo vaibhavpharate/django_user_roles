@@ -1,0 +1,36 @@
+{% extends "first_app/layout/main_base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title_block %}
+  Update Order
+{% endblock title_block %}
+{% block content_block %}
+  <div class="jumbotron mb-0 vh-100 d-flex">
+    <div class="col-6 mx-auto my-auto">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="mb-0">Update Order</h3>
+        </div>
+        <div class="card-body">
+          {% for message in messages %}
+            <div class="col-12 my-2">
+              <div class="alert alert-{{message.tags}}">
+                {{message}}
+              </div>
+            </div>
+          {% endfor %}
+          <form method="post">
+            {% csrf_token %}
+            {{ form | crispy }}
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary">
+                Update Order
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content_block %}
